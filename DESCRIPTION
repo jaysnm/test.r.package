@@ -1,0 +1,14 @@
+Package: demo.pkg
+Title: An `ugly` R package to demonstrate How to Create an R Package
+Version: 0.1.0
+Authors@R: 
+    person(given = "Jason",
+           family = "Kinyua",
+           role = c("aut", "cre"),
+           email = "jaysnmury@gmail.com",
+           comment = c(ORCID = "Dummy Package"))
+Description: The Package does nothing useful!.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1

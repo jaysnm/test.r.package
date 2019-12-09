@@ -2,8 +2,10 @@ Package: rpackage.hack
 Title: An `ugly` R package to demonstrate How to Create an R Package
 Version: 0.1.0
 Imports: 
-    rio,
-    ggplot2
+    rio
+Depends:
+    ggplot2,
+    R (>= 3.6.0)
 Authors@R: 
     person(given = "Jason",
            family = "Kinyua",

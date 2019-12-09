@@ -2,3 +2,4 @@
 
 export(hobbyist_fun)
 export(test_fun)
+import(ggplot2)

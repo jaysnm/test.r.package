@@ -101,14 +101,29 @@ The above package is so basic. In this section, we are going to utilize imense p
 
 #### Add external package dependencies  
 
-> Never use library() or require() in a R package!  
+There are four functions that make a package available. They differ based on whether they load or attach, and what happens if the package is not found (i.e., throws an error or returns FALSE).  
 
-To indicate that your R package depends on these external packages, add the information to **DESCRIPTION** file under the **Imports** content. That is:-
+```
+            Throws error            Returns False
+            ------------            -------------  
+Load        loadNamespace("x")	    requireNamespace("x", quietly = TRUE)   
+Attach      library(x)	            require(x, quietly = TRUE)  
+```
+Of the four, you should only ever use two:
+
++ Use library(x) in data analysis scripts. It will throw an error if the package is not installed, and will terminate the script. You want to attach the package to save typing. Never use library() in a package.
+
++ Use requireNamespace(x, quietly = TRUE) inside a package if you want a specific action (e.g. throw an error) depending on whether or not a suggested package is installed.  
+
+> Never use library() or require() in a package!  Instead, use the Depends or Imports fields in the DESCRIPTION.  
+
+Listing a package in either Depends or Imports ensures that it’s installed when needed. The main difference is that where Imports just loads the package, Depends attaches it.
 
 ```{md}
-Imports:
-    rio,
+Depends:
     ggplot2
+Imports:
+    rio
 ```
 
 #### Making raw data available  

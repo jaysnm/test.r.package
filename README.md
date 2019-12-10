@@ -97,9 +97,9 @@ $ R
 
 ### step 7: Making the package interesting!!!  
 
-The above package is so basic. In this section, we are going to utilize imense power of external dependency packages and raw dataset.  
+The above package is so basic. In this section, we are going to use external package(s) and locally stored raw dataset to make the package interesting.  
 
-#### Add external package dependencies  
+#### Add external package  
 
 There are four functions that make a package available. They differ based on whether they load or attach, and what happens if the package is not found (i.e., throws an error or returns FALSE).  
 
@@ -204,6 +204,42 @@ $ R
 
 `> rpackage.hack::hobbyist_fun()`
 
-![Run](imgs/run2.png)
+![Run](imgs/run2.png)  
 
-**Whoop-de-doo!** Congratulations!  
+#### Removing blot  
+
+I trust you noted that our `hobbyist_fun` function has lots of `ggplot::` namespace reference. Since our package is importing a lot of stuff from `ggplot2`, we better have imported the package instead of individual functions.  
+Simply add `@import pkg` in roxygen2 specifications of the package module method to import a package.  
+Edit your  `hobbyist_fun` as show below:  
+
+```{r}
+#' Making it a fun  
+#' 
+#' Lah-de-dah! Say no More!!!  
+#' Here we create a function that makes use of rio::import to read a csv datafile 
+#' and ggplot2 to render graphics of dataset loaded.   
+#' @export 
+#' @import ggplot2      #Imported ggplot2 methods
+#' @examples  
+#' #Not Run  
+#' hobbyist_fun()  
+#' ?hobbyist_fun
+hobbyist_fun <- function(){
+    print(test_fun(4,75))
+    # read csv dataset
+    data_file <- system.file("extdata", "weather_2014.csv", package = "rpackage.hack")
+    data <- rio::import(data_file)
+    ggplot(data, aes(season,rain)) +
+        geom_jitter(aes(colour=rain), position = position_jitter(width = 0.2)) +
+        scale_colour_gradient2(low = "blue", mid = "red",high = "black", midpoint = 30) +
+        scale_y_continuous(breaks = seq(0,80,20)) +
+        xlab("Season") +
+        ylab ("Rain (mm)") +
+        ggtitle("Daily rain amount by season")
+}
+```
+
+Interesting?  
+`R packages by Hadley Wickham` [documentation](http://r-pkgs.had.co.nz/) is more interesting!  
+
+Congratulations for  aking it this far!!!
